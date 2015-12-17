@@ -46,7 +46,7 @@ int main (void)
 
     double tmin = 1., tmax = 2.;
     int count = 1000;
-    double time, time1, time2;
+    double time, time1;
 
     do
     {
@@ -67,8 +67,34 @@ int main (void)
         count = adjust_rep_count (count, time, tmin, tmax);
     }
     while ((time > tmax) || (time < tmin));
-        time1 = time / count;
+    time1 = time / count;
     printf (" %10.2f usec %10.6f sec %10d\n", time1 * 1.e6, time, count);
+
+    double tmin1 = 1., tmax1 = 2.;
+    int count1 = 1000;
+    double time2, time3;
+
+    do
+    {
+        timer_start ();
+
+        for (i = 0; i < count1; i++)
+        {
+            double pi = pi_leibniz (ileibniz);
+        }
+
+        time2 = timer_stop ();
+        time3 = time2 / count1;
+        printf (" %10.2f usec %10.6f sec %10d\n", time3 * 1.e6, time, count1);
+        /*
+         * adjust count1 such that cpu time is between
+         * tmin1 and tmax1
+         */
+        count1 = adjust_rep_count (count1, time2, tmin1, tmax1);
+    }
+    while ((time2 > tmax1) || (time2 < tmin1));
+    time3 = time2 / count1;
+    printf (" %10.2f usec %10.6f sec %10d\n", time3 * 1.e6, time2, count1);
 
     return 0;
 }
