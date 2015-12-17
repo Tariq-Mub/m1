@@ -25,7 +25,7 @@ LDLIBS    = -lm
 
 target    = pi
 
-$(target) : $(target).o pi-code.o
+$(target) : $(target).o pi-code.o timer.o adjust.o
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 edit : $(target).c
